@@ -31,7 +31,7 @@ class CardData:
         return self._data
     
     def search_by_set(self, set_name: str) -> list[PokemonCard]:
-        cards = self.all_cards().get(set_name, None)
+        cards = self.all_cards().get(set_name.upper(), None)
         if cards is None:
             raise InvalidSetName("No cards from this set registered to database.")
         
@@ -51,5 +51,8 @@ class CardData:
                 valid_cards.append(card)
                 
         return valid_cards
+    
+    def search(self, search_type: str, search_filter: str) -> list:
+        return self.search_by_name(search_filter) if search_type == "NAME" else self.search_by_set(search_filter)
     
 cards = CardData.load('C:/projects/pokemon-bulk-tracker/source_file.json')
