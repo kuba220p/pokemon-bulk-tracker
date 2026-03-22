@@ -21,12 +21,12 @@ class PokemonCard:
         return f"Pokemon: {self.name()}, Set: {self.parent_set()}, Card No.: {self.card_no()}"
     
 class ReverseHolo(PokemonCard):
-    def __init__(self, name: str, card_no: int, count: int, parent_set: str, reverse_type: str) -> None:
-        super().__init__(name, card_no, count, parent_set)
+    def __init__(self, reverse_type: str, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
         self._reverse_type = reverse_type
         
     def reverse_type(self) -> str:
         return self._reverse_type
     
     def __str__(self) -> str:
-        return super().__str__() + f"Reverse Type: {self.reverse_type()}"
+        return super().__str__() + f" Reverse Type: {self.reverse_type()}"
