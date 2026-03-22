@@ -18,8 +18,10 @@ class CardData:
         for set_name, cards in json_dict.items():
             set_dict[set_name] = []      
             for card in cards:
-                reverse_type = card.get('reverse_type', None)
-                pokecard = ReverseHolo(**card) if reverse_type else PokemonCard(**card)
+                if card['is_reverse']:
+                    pokecard = ReverseHolo(**card)
+                else:   
+                    pokecard = PokemonCard(**card)
                     
                 set_dict[set_name].append(pokecard)
                 
