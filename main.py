@@ -6,6 +6,9 @@ from data_loader import CardData
 
 from search_list import SearchResultList
 from signals import SearchSignals
+from new_card_dialog import NewCardDialog
+
+from errors import InvalidSetName
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -29,6 +32,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def search_button(self) -> QPushButton:
         return self.pb_search
     
+    def button_add_card(self) -> QPushButton:
+        return self.pb_add_card
+    
     def search_settings(self) -> dict:
         return {"search_type": self._search_type(), "search_filter": self._search_filter()}
 
@@ -39,9 +45,11 @@ class App:
         self._db = CardData.load(db_path)
         self._window: MainWindow = MainWindow()
         self._search_signals = SearchSignals()
+        
+        self._new_card_dialog = NewCardDialog()
+        
+        
         self._connection_client = ConnectionClient(self)
-        
-        
         self._window.show()
         self._app.exec()
         
@@ -55,8 +63,14 @@ class App:
         return self._search_signals
     
     def search(self, search_settings: dict) -> None:
-        results = self.db().search(**search_settings)
+        try:
+            results = self.db().search(**search_settings)
+        except InvalidSetName:
+            results = ['Nothing to see...']
         self.search_signals().search_finished(results)
+        
+    def new_card_dialog(self) -> NewCardDialog:
+        return self._new_card_dialog
 
 class ConnectionClient:
     def __init__(self, app: App):
@@ -74,6 +88,7 @@ class ConnectionClient:
     def initialize(self) -> None:
         self.window().search_button().clicked.connect(lambda: self.app().search(self.window().search_settings()))
         self.app().search_signals().searchFinished.connect(self.window().search_list().catch_search_results)
+        self.window().button_add_card().clicked.connect(self.app().new_card_dialog().exec)
 
          
 if __name__ == '__main__':
