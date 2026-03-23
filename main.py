@@ -17,6 +17,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.initialize()
         
+        self._new_card_dialog = NewCardDialog()
+        
     def _search_filter(self) -> str:
         return self.line_filter.text()
     
@@ -37,6 +39,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def search_settings(self) -> dict:
         return {"search_type": self._search_type(), "search_filter": self._search_filter()}
+    
+    def new_card_dialog(self) -> NewCardDialog:
+        return self._new_card_dialog
 
 class App:
     def __init__(self, db_path: str):
@@ -45,9 +50,6 @@ class App:
         self._db = CardData.load(db_path)
         self._window: MainWindow = MainWindow()
         self._search_signals = SearchSignals()
-        
-        self._new_card_dialog = NewCardDialog()
-        
         
         self._connection_client = ConnectionClient(self)
         self._window.show()
@@ -67,10 +69,16 @@ class App:
             results = self.db().search(**search_settings)
         except InvalidSetName:
             results = ['Nothing to see...']
+            
+        if not results:
+            results = ['Nothing to see...']
         self.search_signals().search_finished(results)
         
-    def new_card_dialog(self) -> NewCardDialog:
-        return self._new_card_dialog
+    def new_card(self) -> None:
+        if self.window().new_card_dialog().exec():
+            new_card = self.window().new_card_dialog().new_card()
+            
+
 
 class ConnectionClient:
     def __init__(self, app: App):
@@ -88,7 +96,7 @@ class ConnectionClient:
     def initialize(self) -> None:
         self.window().search_button().clicked.connect(lambda: self.app().search(self.window().search_settings()))
         self.app().search_signals().searchFinished.connect(self.window().search_list().catch_search_results)
-        self.window().button_add_card().clicked.connect(self.app().new_card_dialog().exec)
+        self.window().button_add_card().clicked.connect(self.app().new_card)
 
          
 if __name__ == '__main__':
