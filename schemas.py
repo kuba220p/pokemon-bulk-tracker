@@ -26,7 +26,7 @@ class PokemonCard:
         return self._rarity
     
     def __str__(self) -> str:
-        return f'Pokemon: {self.name()}, Set: {self.parent_set()}, Card No.: {self.card_no()}, Reverse: {self.is_reverse()}, Rarity: {self.rarity()}'
+        return f'Pokemon: {self.name()}, Set: {self.parent_set()}, Card No.: {self.card_no()}, Reverse: {self.is_reverse()}, Rarity: {self.rarity()}, Quantity: {self.count()}'
     
     def __repr__(self) -> str:
         return self.name()

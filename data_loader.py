@@ -55,4 +55,3 @@ class CardData:
     def search(self, search_type: str, search_filter: str) -> list:
         return self.search_by_name(search_filter) if search_type == "NAME" else self.search_by_set(search_filter)
     
-cards = CardData.load('C:/projects/pokemon-bulk-tracker/source_file.json')

@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLineEdit,
-    QListWidget, QListWidgetItem, QMainWindow, QMenuBar,
-    QPushButton, QRadioButton, QSizePolicy, QStatusBar,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLineEdit, QListWidget,
+    QListWidgetItem, QMainWindow, QMenuBar, QPushButton,
+    QRadioButton, QSizePolicy, QStatusBar, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -27,20 +27,8 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.gridLayout = QGridLayout(self.centralwidget)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.verticalLayout = QVBoxLayout(self.widget)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.list_search_result = QListWidget(self.widget)
-        self.list_search_result.setObjectName(u"list_search_result")
-
-        self.verticalLayout.addWidget(self.list_search_result)
-
-
-        self.gridLayout.addWidget(self.widget, 0, 2, 1, 1)
-
+        self.horizontalLayout_3 = QHBoxLayout(self.centralwidget)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.widget_2 = QWidget(self.centralwidget)
         self.widget_2.setObjectName(u"widget_2")
         self.verticalLayout_2 = QVBoxLayout(self.widget_2)
@@ -70,18 +58,42 @@ class Ui_MainWindow(object):
         self.line_filter = QLineEdit(self.widget_3)
         self.line_filter.setObjectName(u"line_filter")
 
-        self.horizontalLayout.addWidget(self.line_filter)
+        self.horizontalLayout.addWidget(self.line_filter, 0, Qt.AlignTop)
 
         self.pb_search = QPushButton(self.widget_3)
         self.pb_search.setObjectName(u"pb_search")
 
-        self.horizontalLayout.addWidget(self.pb_search)
+        self.horizontalLayout.addWidget(self.pb_search, 0, Qt.AlignTop)
 
 
-        self.verticalLayout_2.addWidget(self.widget_3)
+        self.verticalLayout_2.addWidget(self.widget_3, 0, Qt.AlignTop)
+
+        self.widget_5 = QWidget(self.widget_2)
+        self.widget_5.setObjectName(u"widget_5")
+        self.horizontalLayout_4 = QHBoxLayout(self.widget_5)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.pb_add_card = QPushButton(self.widget_5)
+        self.pb_add_card.setObjectName(u"pb_add_card")
+
+        self.horizontalLayout_4.addWidget(self.pb_add_card)
 
 
-        self.gridLayout.addWidget(self.widget_2, 0, 1, 1, 1, Qt.AlignLeft|Qt.AlignTop)
+        self.verticalLayout_2.addWidget(self.widget_5)
+
+
+        self.horizontalLayout_3.addWidget(self.widget_2, 0, Qt.AlignTop)
+
+        self.list_search_result = QListWidget(self.centralwidget)
+        self.list_search_result.setObjectName(u"list_search_result")
+
+        self.horizontalLayout_3.addWidget(self.list_search_result)
+
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.verticalLayout = QVBoxLayout(self.widget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+
+        self.horizontalLayout_3.addWidget(self.widget)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -102,5 +114,6 @@ class Ui_MainWindow(object):
         self.radioButton_2.setText(QCoreApplication.translate("MainWindow", u"Search by name", None))
         self.chk_by_set.setText(QCoreApplication.translate("MainWindow", u"Search by set", None))
         self.pb_search.setText(QCoreApplication.translate("MainWindow", u"Search", None))
+        self.pb_add_card.setText(QCoreApplication.translate("MainWindow", u"Add Pokemon Card", None))
     # retranslateUi
 
